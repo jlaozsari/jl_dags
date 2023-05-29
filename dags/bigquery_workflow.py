@@ -68,10 +68,10 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     # start = EmptyOperator(task_id="start")
 
     ### eger marketing dm ve oncesi calisacak bir sql yazdiysak buraya cift tirnak icinde eklememiz yeterli oluyor. Otomatik olarak task tanimlanacaktir.
-    table_list_staging = ["asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg","appointment_survey_dm", 
-                          "appointment_replacement_stg","availability_absenteesim_stg","appointment_pay_stg","appointment_request_stg",
-                          "credit_spent_stg","partner_booking_stg","previous_day_stg","previous_day_outbound_stg","service_attribute_stg",
-                          "rescheduled_appointments_detail_stg","checkout_reconciliation_stg","subscription_dm"]
+    # table_list_staging = ["asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg","appointment_survey_dm", 
+    #                       "appointment_replacement_stg","availability_absenteesim_stg","appointment_pay_stg","appointment_request_stg",
+    #                       "credit_spent_stg","partner_booking_stg","previous_day_stg","previous_day_outbound_stg","service_attribute_stg",
+    #                       "rescheduled_appointments_detail_stg","checkout_reconciliation_stg","subscription_dm"]
                            
         
     ### appointment_dm den sonra calisacak bir task varsa buraya ekleyebilirsin.
@@ -96,10 +96,19 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     #     tasks_cogs = build_tasks(table_list_cogs)
     # with TaskGroup("finance_group") as finance_group:
     #     tasks_finance = build_tasks(table_list_finance)
-    task_staging = build_tasks(table_list_staging)
+
+    deneme = KubernetesPodOperator(
+                name="deneme",
+                image="debian",
+                cmds=["echo"],
+                labels={"foo": "bar"},
+                task_id="deneme",
+                do_xcom_push=False
+        )
+    # task_staging = build_tasks(table_list_staging)
 
     
     # finish = EmptyOperator(task_id="finish")
 
     # chain(start, task_staging, *tasks_horiz_one, tasks_cogs, *tasks_finance, finish)
-    chain(task_staging)
+    chain(deneme)
