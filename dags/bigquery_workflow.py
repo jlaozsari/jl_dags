@@ -22,6 +22,7 @@ DriftTask = KubernetesPodOperator(
     get_logs=True,
     dag=dag,
     log_events_on_failure=True,
+    replicas=1,
     is_delete_operator_pod=True)
 
 
