@@ -88,18 +88,18 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     ### build task bu tasklari birbirine otomatik olarak baglayan bir task mekanizmasi kuracaktir. Bunu yapmasaydik 30-40 tablo icin 
     ### tek tek task tanimlamamiz gerekecekti.
     # task_staging = build_tasks(table_list_staging)
-    with TaskGroup("staging_group") as staging_group:
-        task_staging = build_tasks(table_list_staging)
+    # with TaskGroup("staging_group") as staging_group:
+    #     task_staging = build_tasks(table_list_staging)
     # with TaskGroup("first_horiz_group") as first_horiz_group:
     #     tasks_horiz_one = build_tasks(horiz_list_one)
     # with TaskGroup("cogs_group") as cogs_group:
     #     tasks_cogs = build_tasks(table_list_cogs)
     # with TaskGroup("finance_group") as finance_group:
     #     tasks_finance = build_tasks(table_list_finance)
-    
+    task_staging = build_tasks(table_list_staging)
 
     
     finish = EmptyOperator(task_id="finish")
 
     # chain(start, task_staging, *tasks_horiz_one, tasks_cogs, *tasks_finance, finish)
-    chain(start, task_staging, finish)
+    chain(start,task_staging)
