@@ -102,4 +102,4 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     finish = EmptyOperator(task_id="finish")
 
     # chain(start, task_staging, *tasks_horiz_one, tasks_cogs, *tasks_finance, finish)
-    chain(start,task_staging)
+    chain(task_staging)
