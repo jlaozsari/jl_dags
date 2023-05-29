@@ -23,7 +23,7 @@ def build_tasks(table_list):
         task_id = table + "_task"
         table_type_ = table.split("_")[-1]
         task = KubernetesPodOperator(
-                name="hello-dry-run",
+                name=task_id,
                 image="debian",
                 cmds=["echo"],
                 arguments=[
@@ -31,9 +31,9 @@ def build_tasks(table_list):
                     "--table_type", table_type_
                 ],
                 labels={"foo": "bar"},
-                task_id="dry_run_demo",
-                do_xcom_push=False,
-                )
+                task_id=task_id,
+                do_xcom_push=False
+        )
     #     KubernetesPodOperator(
     #     # The ID specified for the task.
     #     task_id="pod-ex-minimum",
