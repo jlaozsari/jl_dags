@@ -65,7 +65,7 @@ def build_tasks(table_list):
 with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
          schedule_interval="20 01 * * *", catchup=False) as dag:
     
-    start = EmptyOperator(task_id="start")
+    # start = EmptyOperator(task_id="start")
 
     ### eger marketing dm ve oncesi calisacak bir sql yazdiysak buraya cift tirnak icinde eklememiz yeterli oluyor. Otomatik olarak task tanimlanacaktir.
     table_list_staging = ["asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg","appointment_survey_dm", 
@@ -99,7 +99,7 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     task_staging = build_tasks(table_list_staging)
 
     
-    finish = EmptyOperator(task_id="finish")
+    # finish = EmptyOperator(task_id="finish")
 
     # chain(start, task_staging, *tasks_horiz_one, tasks_cogs, *tasks_finance, finish)
     chain(task_staging)
