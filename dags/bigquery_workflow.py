@@ -23,23 +23,16 @@ def build_tasks(table_list):
         task_id = table + "_task"
         table_type_ = table.split("_")[-1]
         task = KubernetesPodOperator(
-                task_id=task_id,
-                name=task_id,
-                namespace="composer-user-workloads",
-                image="europe-west1-docker.pkg.dev/justmop-262a8/justlife/python-testing", #  gcr.io/gcp-runtimes/ubuntu_20_0_4
-                # cmds=["python3", "/app/bigquery-workflow.py"],
+                name="hello-dry-run",
+                image="debian",
                 cmds=["echo"],
                 arguments=[
                     "--table", table,
                     "--table_type", table_type_
                 ],
-                container_resources=k8s_models.V1ResourceRequirements(
-                    limits={"memory": "1Gi", "cpu": "1000m"},
-                ),
-                config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
-                kubernetes_conn_id="kubernetes_default",
+                labels={"foo": "bar"},
+                task_id="dry_run_demo",
                 do_xcom_push=False,
-                task_concurrency=12
                 )
     #     KubernetesPodOperator(
     #     # The ID specified for the task.
