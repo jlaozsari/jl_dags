@@ -12,7 +12,7 @@ dag = DAG('sampleDAG', default_args=default_args, schedule_interval=None)
 
 
 DriftTask = KubernetesPodOperator(
-    namespace='default',
+    # namespace='default',
     image="apache/airflow:2.5.3",
     cmds=["python", "-c"],
     arguments=["print('This code is running in a Kubernetes Pod')"],
