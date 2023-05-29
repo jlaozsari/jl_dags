@@ -1,6 +1,6 @@
 import airflow
 from airflow import DAG
-from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
+from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 
 default_args = {
     'owner': 'airflow',
@@ -12,18 +12,12 @@ dag = DAG('sampleDAG', default_args=default_args, schedule_interval=None)
 
 
 DriftTask = KubernetesPodOperator(
-    # namespace='default',
-    image="apache/airflow:2.5.3",
-    cmds=["python", "-c"],
-    arguments=["print('This code is running in a Kubernetes Pod')"],
-    labels={},
-    name="sampleDAG",
-    task_id="sampleDAG",
-    get_logs=True,
-    dag=dag,
-    log_events_on_failure=True,
-    replicas=1,
-    is_delete_operator_pod=True)
-
+    name="hello-dry-run",
+    image="debian",
+    cmds=["bash", "-cx"],
+    arguments=["echo", "10"],
+    labels={"foo": "bar"},
+    task_id="dry_run_demo"
+)
 
 DriftTask
