@@ -117,14 +117,16 @@ default_args = {
     'start_date': datetime(2023, 5, 31),
 }
 
-dag = DAG('bigquery_workflow', default_args=default_args, schedule_interval=None)
+with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
+         schedule_interval="20 01 * * *", catchup=False) as dag:
 
-run_this = KubernetesPodOperator(
-    task_id='run_pod',
-    name='pod-operator-example',
-    namespace='default',
-    image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
-    cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
-    # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
-    dag=dag
-)
+    run_this = KubernetesPodOperator(
+        task_id='run_pod',
+        name='pod-operator-example',
+        namespace='default',
+        image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
+        cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
+        # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
+    )
+
+run_this
