@@ -126,7 +126,9 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
         namespace='default',
         image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
         cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
-        kubernetes_conn_id='kubernetes_default'
+        conn_id='kubernetes_default',
+        is_delete_operator_pod=True,
+        get_logs=True
         # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
     )
 
