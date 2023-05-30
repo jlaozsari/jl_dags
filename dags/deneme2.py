@@ -6,7 +6,7 @@
 # from google.cloud import bigquery
 # from datetime import datetime
 
-# from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
+# from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 
 # from kubernetes.client import models as k8s_models
 
@@ -30,7 +30,7 @@
 #                 container_resources=k8s_models.V1ResourceRequirements(
 #                     limits={"memory": "1Gi", "cpu": "1000m"},
 #                 ),
-#                 # config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
+#                 config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
 #                 kubernetes_conn_id="kubernetes_default",
 #                 do_xcom_push=False,
 #                 # task_concurrency=12
@@ -123,11 +123,10 @@ with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
     run_this = KubernetesPodOperator(
         task_id='run_pod',
         name='pod-operator-example',
-        namespace='airflow',
+        namespace='default',
         image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
         cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
         kubernetes_conn_id='kubernetes_default',
-        config_file="/home/airflow/composer_kube_config",
         is_delete_operator_pod=True,
         get_logs=True
         # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
