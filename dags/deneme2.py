@@ -120,45 +120,17 @@ default_args = {
 with DAG("bigquery_workflow", start_date=datetime(2022, 1, 1),
          schedule_interval="20 01 * * *", catchup=False) as dag:
 
-    asofcalendar_dm = KubernetesPodOperator( # asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg
-        task_id='asofcalendar_dm',
-        name='asofcalendar_dm',
+    run_this = KubernetesPodOperator(
+        task_id='run_pod',
+        name='pod-operator-example',
         namespace='airflow',
         image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
         cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
         kubernetes_conn_id='kubernetes_default',
-        # config_file="/home/airflow/composer_kube_config",
+        config_file="/home/airflow/composer_kube_config",
         is_delete_operator_pod=True,
         get_logs=True
         # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
     )
 
-    # calendar_dm = KubernetesPodOperator( # asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg
-    #     task_id='calendar_dm',
-    #     name='calendar_dm',
-    #     namespace='airflow',
-    #     image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
-    #     cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
-    #     kubernetes_conn_id='kubernetes_default',
-    #     # config_file="/home/airflow/composer_kube_config",
-    #     is_delete_operator_pod=True,
-    #     get_logs=True
-    #     # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
-    # )
-
-    # service_attribute_appointment_detail_stg = KubernetesPodOperator( # asofcalendar_dm","calendar_dm", "service_attribute_appointment_detail_stg
-    #     task_id='service_attribute_appointment_detail_stg',
-    #     name='service_attribute_appointment_detail_stg',
-    #     namespace='airflow',
-    #     image='apache/airflow:2.6.1',  # Docker imajınızı buraya ekleyin
-    #     cmds=['echo'],  # Pod içinde çalıştırılacak komutları buraya ekleyin
-    #     kubernetes_conn_id='kubernetes_default',
-    #     # config_file="/home/airflow/composer_kube_config",
-    #     is_delete_operator_pod=True,
-    #     get_logs=True
-    #     # arguments=['arg1', 'arg2'],  # Komutlara geçmek istediğiniz argümanları buraya ekleyin
-    # )
-
-    asofcalendar_dm
-
-    # [asofcalendar_dm,calendar_dm,service_attribute_appointment_detail_stg]
+    run_this
