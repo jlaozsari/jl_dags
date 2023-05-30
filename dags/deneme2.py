@@ -30,7 +30,7 @@ def build_tasks(table_list):
                 container_resources=k8s_models.V1ResourceRequirements(
                     limits={"memory": "1Gi", "cpu": "1000m"},
                 ),
-                config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
+                # config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
                 kubernetes_conn_id="kubernetes_default",
                 do_xcom_push=False,
                 # task_concurrency=12
