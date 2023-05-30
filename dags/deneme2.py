@@ -39,7 +39,7 @@ def build_tasks(table_list):
                 config_file="/home/airflow/composer_kube_config", # kubernetespodoperator
                 kubernetes_conn_id="kubernetes_default",
                 do_xcom_push=False,
-                task_concurrency=12
+                # task_concurrency=12
                 )
     #     KubernetesPodOperator(
     #     # The ID specified for the task.
