@@ -25,7 +25,7 @@ def build_tasks(table_list):
         task = KubernetesPodOperator(
                 task_id=task_id,
                 name=task_id,
-                namespace="composer-user-workloads",
+                namespace="airflow",
                 image="europe-west1-docker.pkg.dev/justmop-262a8/justlife/python-testing", #  gcr.io/gcp-runtimes/ubuntu_20_0_4
                 # cmds=["python3", "/app/bigquery-workflow.py"],
                 cmds=["echo"],
